@@ -15,7 +15,6 @@
 - [2019最新QQ音乐Api](https://blog.csdn.net/qq_41979349/article/details/102458551)
 - [QQ音乐开源API下载收费歌曲](https://www.52pojie.cn/thread-1008496-1-1.html)
 - [名流互联公共API接口](https://api.mlwei.com/)
-- 
 
 1. ```npx create-react-app cra-electron-forge-demo --use-npm```
 2. ```cd cra-electron-forge-demo```
