@@ -6,6 +6,17 @@
 ##### Referance: [Electron Apps Made Easy with Create React App and Electron Forge](https://dev.to/mandiwise/electron-apps-made-easy-with-create-react-app-and-electron-forge-560e)
 ##### Referance: [Create an app with Electron and React](https://flaviocopes.com/react-electron/#install-foreman-to-allow-executing-the-app-from-command-line)
 
+##### Resources:
+- [Iconset: Noto Emoji Travel & Places Icons by Google (198 icons)](https://www.iconarchive.com/show/noto-emoji-travel-places-icons-by-google.1.html)
+- [Iconset: Papirus Apps Icons by Papirus Development Team (1418 icons)](https://www.iconarchive.com/show/papirus-apps-icons-by-papirus-team.26.html)
+- [draw.io](https://app.diagrams.net/#Hgaorock530%2Fbrainstorm%2Fmain%2Fcoffeeshop.svg)
+- [网易云音乐 API](https://binaryify.github.io/NeteaseCloudMusicApi/#/?id=neteasecloudmusicapi)
+- [http://music.163.com/api/search/get/web?s=%E9%82%93%E7%B4%AB%E6%A3%8B&type=10](http://music.163.com/api/search/get/web?s=%E9%82%93%E7%B4%AB%E6%A3%8B&type=10)
+- [2019最新QQ音乐Api](https://blog.csdn.net/qq_41979349/article/details/102458551)
+- [QQ音乐开源API下载收费歌曲](https://www.52pojie.cn/thread-1008496-1-1.html)
+- [名流互联公共API接口](https://api.mlwei.com/)
+- 
+
 1. ```npx create-react-app cra-electron-forge-demo --use-npm```
 2. ```cd cra-electron-forge-demo```
 3. ```npm i -D electron```
@@ -250,4 +261,15 @@ Now we can run a single command to package up our app for distribution:
 /out # NEW!
 
 # ...
+```
+
+### Issues:
+
+- [electron-winstaller only gives the error "the path specified, the file name or both are too long."](https://github.com/electron/windows-installer/issues/219)
+```
+"config": {
+    "forge": {
+      "packagerConfig": {
+        "asar": true
+      },
 ```
