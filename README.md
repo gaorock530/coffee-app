@@ -1,10 +1,10 @@
-![](https://res.cloudinary.com/practicaldev/image/fetch/s--1TYSGdRE--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/xso6o2pjmvzb0gjpnir1.png)
+![Coffee App](https://res.cloudinary.com/practicaldev/image/fetch/s--1TYSGdRE--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/xso6o2pjmvzb0gjpnir1.png)
 ### Coffee App with React and Electron
 
 #### Configration:
 
 ##### Referance: [Electron Apps Made Easy with Create React App and Electron Forge](https://dev.to/mandiwise/electron-apps-made-easy-with-create-react-app-and-electron-forge-560e)
-##### [Create an app with Electron and React](https://flaviocopes.com/react-electron/#install-foreman-to-allow-executing-the-app-from-command-line)
+##### Referance: [Create an app with Electron and React](https://flaviocopes.com/react-electron/#install-foreman-to-allow-executing-the-app-from-command-line)
 
 1. ```npx create-react-app cra-electron-forge-demo --use-npm```
 2. ```cd cra-electron-forge-demo```
@@ -237,7 +237,7 @@ app.whenReady().then(() => {
 ```
 
 2. Note that if you wish to change the name that appears at the top of the window, you'll need to update that in the title element in the public/index.html file before building the app:
-![](https://res.cloudinary.com/practicaldev/image/fetch/s--1jPhWa5i--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/i/rvuo9wb7kflp04fwx9lf.png)
+![show](https://res.cloudinary.com/practicaldev/image/fetch/s--1jPhWa5i--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/i/rvuo9wb7kflp04fwx9lf.png)
 Now we can run a single command to package up our app for distribution:
 ```npm run make```
 
