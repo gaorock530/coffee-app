@@ -1,4 +1,4 @@
-![Coffee App](https://res.cloudinary.com/practicaldev/image/fetch/s--1TYSGdRE--/c_imagga_scale,f_auto,fl_progressive,h_420,q_auto,w_1000/https://dev-to-uploads.s3.amazonaws.com/i/xso6o2pjmvzb0gjpnir1.png)
+![Coffee App](../coffee-app/public/assets/xso6o2pjmvzb0gjpnir1.png)
 ### Coffee App with React and Electron
 
 #### Configration:
@@ -237,11 +237,11 @@ app.whenReady().then(() => {
 ```
 
 2. Note that if you wish to change the name that appears at the top of the window, you'll need to update that in the title element in the public/index.html file before building the app:
-![show](https://res.cloudinary.com/practicaldev/image/fetch/s--1jPhWa5i--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/i/rvuo9wb7kflp04fwx9lf.png)
+![show](../coffee-app/public/assets/rvuo9wb7kflp04fwx9lf.png)
 Now we can run a single command to package up our app for distribution:
 ```npm run make```
 
-3. Finally, if you plan on version controlling this project with Git, then be sure to add the out directory to the .gitignore file before making your next commit:
+1. Finally, if you plan on version controlling this project with Git, then be sure to add the out directory to the .gitignore file before making your next commit:
 ```
 # ...
 
