@@ -1,5 +1,6 @@
 {
   "name": "coffee-app",
+  "productName": "Coffee Manager",
   "version": "0.1.0",
   "private": true,
   "author": "Magic",
@@ -27,7 +28,24 @@
     "dev": "concurrently -k \"npm start\" \"npm:electron\"",
     "electron": "wait-on tcp:3000 && electron-forge start",
     "package": "react-scripts build && electron-forge package",
-    "make": "react-scripts build && electron-forge make"
+    "make": "react-scripts build && electron-forge make",
+    "build-installer": "electron-builder"
+  },
+  "build": {
+    "appId": "Coffee Manager",
+    "win": {
+      "target": ["nsis"],
+      "icon": "public/assets/theme.ico",
+      "requestedExecutionLevel": "requireAdministrator"
+    },
+    "nsis": {
+      "installerIcon": "public/assets/theme.ico",
+      "uninstallerIcon": "public/assets/theme.ico",
+      "uninstallDisplayName": "Coffee Manager",
+      "license": "license.txt",
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
   },
   "eslintConfig": {
     "extends": [
