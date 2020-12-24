@@ -3,10 +3,6 @@ const path = require("path");
 const { app, BrowserWindow, ipcMain } = require("electron");
 const isDev = require("electron-is-dev");
 
-const appState = {
-  windowMax: false
-}
-
 // Conditionally include the dev tools installer to load React Dev Tools
 let installExtension, REACT_DEVELOPER_TOOLS; // NEW!
 
@@ -22,21 +18,40 @@ if (require("electron-squirrel-startup")) {
 } // NEW!
 
 function createWindow() {
+  let win
   // Create the browser window.
-  const win = new BrowserWindow({
-    width: 800,
-    height: 600,
-    // frame: false,
-    // titleBarStyle: 'hidden',
-    // titleBarStyle: 'customButtonsOnHover',
-    titleBarStyle: 'hiddenInset',
-    minWidth: 800,
-    minHeight: 600,
-    webPreferences: {
-      nodeIntegration: false,
-      preload: path.join(__dirname, '/preload.js')
-    }
-  });
+  if (process.platform !== "darwin") {
+    win = new BrowserWindow({
+      width: 800,
+      height: 600,
+      frame: false,
+      // titleBarStyle: 'hidden',
+      // titleBarStyle: 'customButtonsOnHover',
+      titleBarStyle: 'hiddenInset',
+      minWidth: 800,
+      minHeight: 600,
+      webPreferences: {
+        nodeIntegration: false,
+        preload: path.join(__dirname, '/preload.js')
+      }
+    });
+  } else {
+    win = new BrowserWindow({
+      width: 800,
+      height: 600,
+      // frame: false,
+      // titleBarStyle: 'hidden',
+      // titleBarStyle: 'customButtonsOnHover',
+      titleBarStyle: 'hiddenInset',
+      minWidth: 800,
+      minHeight: 600,
+      webPreferences: {
+        nodeIntegration: false,
+        preload: path.join(__dirname, '/preload.js')
+      }
+    });
+  }
+  
 
   // and load the index.html of the app.
   // win.loadFile("index.html");
