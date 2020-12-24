@@ -1,0 +1,53 @@
+
+header {
+  display: flex;
+  width: 100%;
+  height: 2.5rem;
+  background-color: #333;
+  -webkit-app-region: drag;
+}
+
+header .buttons {
+  width: 5rem;
+  /* background-color: #999; */
+}
+
+header .info {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  flex: 1;
+  font-size: 0.8rem;
+  /* background-color: #777; */
+} 
+
+main {
+  height: calc(100vh - 2.5rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: efefef;
+}
+
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

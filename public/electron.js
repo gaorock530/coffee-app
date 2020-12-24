@@ -1,7 +1,11 @@
 const path = require("path");
 
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow, ipcMain } = require("electron");
 const isDev = require("electron-is-dev");
+
+const appState = {
+  windowMax: false
+}
 
 // Conditionally include the dev tools installer to load React Dev Tools
 let installExtension, REACT_DEVELOPER_TOOLS; // NEW!
@@ -22,8 +26,15 @@ function createWindow() {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
+    // frame: false,
+    // titleBarStyle: 'hidden',
+    // titleBarStyle: 'customButtonsOnHover',
+    titleBarStyle: 'hiddenInset',
+    minWidth: 800,
+    minHeight: 600,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: false,
+      preload: path.join(__dirname, '/preload.js')
     }
   });
 
@@ -39,7 +50,32 @@ function createWindow() {
   if (isDev) {
     win.webContents.openDevTools({ mode: "detach" });
   }
+
+  ipcMain.on('winMax', (e, arg) => {
+    console.log('max event targered', arg, typeof arg, win.isMaximized())
+
+    if (win.isMaximized()) {
+      console.log('to unmaximize')
+      win.unmaximize()
+      e.reply('winMin', true)
+    } else {
+      console.log('to maximize')
+      win.maximize()
+      e.reply('winMax', true)
+    }
+    
+  })
+
+  // ipcMain.on('winMin', (e, arg) => {
+  //   console.log('min event targered', arg, typeof arg, win.isMaximized())
+  //   if (!win.isMaximized()) return
+  //   win.unmaximize()
+  //   e.reply('winMin', false)
+  // })
+
 }
+
+
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
