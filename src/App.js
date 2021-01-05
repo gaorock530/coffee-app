@@ -1,11 +1,19 @@
 import React from 'react'
 import isElectron from './components/isElectron'
+import {isMac} from './components/isWindows'
+
+import Login from './pages/login'
+import Body from './pages/body'
+
 
 function App() {
   const winMax = React.useRef(false)
-
+  const [login, setLogin] = React.useState(false)
+  
+  console.log(isMac)
 
   React.useEffect(() => {
+    if (!isElectron()) return
     window.ipcRenderer.on('winMax', (event, arg) => {
       console.log('ipcRenderer recevied \'max\':', arg)
       winMax.current = true
@@ -14,6 +22,8 @@ function App() {
       console.log('ipcRenderer recevied \'min\':', arg)
       winMax.current = false
     })
+ 
+    
   }, [])
 
   const handleMaxWindow = () => {
@@ -24,6 +34,11 @@ function App() {
     
   }
 
+  const onLogin = () => {
+    setLogin(true)
+  }
+
+
   return (
     <div className="App">
       <header onDoubleClick={handleMaxWindow}>
@@ -31,9 +46,7 @@ function App() {
           Coffee Relax
         </div>
       </header>
-      <main>
-          <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
-      </main>
+      {login?<Body/>:<Login onLogin={onLogin}/>}
     </div>
   );
 }

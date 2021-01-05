@@ -1,0 +1,23 @@
+aside {
+  position: relative;
+  height: 100%;
+  width: 245px;
+  left: 0;
+  top: 0;
+  background-color: #ccc;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+aside li {
+  cursor: pointer;
+  padding: 16px;
+}
+
+aside li:hover {
+  background-color: rgba(243, 9, 99, 0.5);
+}
+
+aside li.active {
+  background-color: #F30963;
+}

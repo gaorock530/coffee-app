@@ -1,2 +1,7 @@
 @import './setup.css';
 @import './app.css';
+@import './sidebar.css';
+@import './section.css';
+
+
+@import './login.css';

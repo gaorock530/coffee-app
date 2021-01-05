@@ -1,0 +1,25 @@
+section {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+
+section nav {
+  position: relative;
+  display: block;
+  width: 100%;
+  left: 0;
+  top: 0;
+  background-color: #999;
+  padding: 3px 5px;
+  z-index: 2;
+}
+
+.main-content {
+  height: 100vh;
+  z-index: 1;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}

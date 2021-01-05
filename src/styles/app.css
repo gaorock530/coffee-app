@@ -26,9 +26,10 @@ header .info {
 main {
   height: calc(100vh - 2.5rem);
   display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: efefef;
+  /* justify-content: center;
+  align-items: center; */
+  flex-direction: row;
+  background-color: #efefef;
 }
 
 
@@ -41,6 +42,9 @@ main {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
+  main {
+    animation: fade-in 300ms ease-in-out;
+  }
 }
 
 @keyframes App-logo-spin {
@@ -49,5 +53,14 @@ main {
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
