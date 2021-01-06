@@ -1,6 +1,7 @@
 import React from 'react'
 import isElectron from './components/isElectron'
 import {isMac} from './components/isWindows'
+import Control from './components/control'
 
 import Login from './pages/login'
 import Body from './pages/body'
@@ -21,9 +22,7 @@ function App() {
     window.ipcRenderer.on('winMin', (event, arg) => {
       console.log('ipcRenderer recevied \'min\':', arg)
       winMax.current = false
-    })
- 
-    
+    }) 
   }, [])
 
   const handleMaxWindow = () => {
@@ -31,7 +30,6 @@ function App() {
       console.log('sending \'max\' event:', winMax.current)
       window.ipcRenderer.send('winMax', winMax.current)
     }
-    
   }
 
   const onLogin = () => {
@@ -41,12 +39,14 @@ function App() {
 
   return (
     <div className="App">
-      <header onDoubleClick={handleMaxWindow}>
+      <header>
+        <div className="header-drag" onDoubleClick={handleMaxWindow}></div>
         <div className="info">
           Coffee Relax
         </div>
+        {!isMac && <Control max={handleMaxWindow}/>}
       </header>
-      {login?<Body/>:<Login onLogin={onLogin}/>}
+      {!login?<Body/>:<Login onLogin={onLogin}/>}
     </div>
   );
 }
