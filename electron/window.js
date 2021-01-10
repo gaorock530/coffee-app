@@ -6,6 +6,7 @@ const WIDTH = 1200
 const HEIGHT = 800
 
 function createWindow() {
+
   let win
   // Create the browser window.
   // windows setup
@@ -16,7 +17,7 @@ function createWindow() {
       frame: false,
       // titleBarStyle: 'hidden',
       // titleBarStyle: 'customButtonsOnHover',
-      titleBarStyle: 'hiddenInset',
+      titleBarStyle: 'hidden',
       minWidth: WIDTH,
       minHeight: HEIGHT,
       webPreferences: {
@@ -36,6 +37,7 @@ function createWindow() {
       minWidth: WIDTH,
       minHeight: HEIGHT,
       webPreferences: {
+        devTools: false,
         nodeIntegration: false,
         preload: path.join(__dirname, '../electron/preload.js')
       }

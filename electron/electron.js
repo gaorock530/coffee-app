@@ -8,6 +8,7 @@ const createWindow = require('./window')
 // Conditionally include the dev tools installer to load React Dev Tools
 let installExtension, REACT_DEVELOPER_TOOLS; // NEW!
 
+
 if (isDev) {
   const devTools = require("electron-devtools-installer");
   installExtension = devTools.default;
