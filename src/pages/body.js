@@ -1,5 +1,4 @@
 import React from 'react'
-
 import ControlledAccordions from '../components/sidebar'
 import { Breadcrumbs, Link, Typography } from '@material-ui/core'
 
@@ -93,7 +92,9 @@ export default function Body () {
 
   return (
     <main>
-      <aside><ControlledAccordions menu={menu} onClickMenu={onClickMenu} active={active} handleExpend={handleExpend} expanded={expanded}/></aside>
+      <aside>
+        <ControlledAccordions menu={menu} onClickMenu={onClickMenu} active={active} handleExpend={handleExpend} expanded={expanded}/>
+      </aside>
       <section>
         <nav>
           <Breadcrumbs aria-label="breadcrumb">
@@ -105,13 +106,13 @@ export default function Body () {
           </Breadcrumbs>
         </nav>
         <div className="main-content">
-          <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
-          <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
-          <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
-          <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
-          <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
-          <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
-          <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
+            <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
+            <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
+            <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
+            <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
+            <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
+            <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
+            <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
         </div>
       </section>
     </main>

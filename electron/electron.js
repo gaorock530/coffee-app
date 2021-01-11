@@ -9,11 +9,11 @@ const createWindow = require('./window')
 let installExtension, REACT_DEVELOPER_TOOLS; // NEW!
 
 
-if (isDev) {
-  const devTools = require("electron-devtools-installer");
-  installExtension = devTools.default;
-  REACT_DEVELOPER_TOOLS = devTools.REACT_DEVELOPER_TOOLS;
-} // NEW!
+// if (isDev) {
+//   const devTools = require("electron-devtools-installer");
+//   installExtension = devTools.default;
+//   REACT_DEVELOPER_TOOLS = devTools.REACT_DEVELOPER_TOOLS;
+// } // NEW!
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling
 if (require("electron-squirrel-startup")) {
@@ -30,11 +30,11 @@ if (require("electron-squirrel-startup")) {
 app.whenReady().then(() => {
   createWindow();
 
-  if (isDev) {
-    installExtension(REACT_DEVELOPER_TOOLS)
-      .then(name => console.log(`Added Extension:  ${name}`))
-      .catch(error => console.log(`An error occurred: , ${error}`));
-  }
+  // if (isDev) {
+  //   installExtension(REACT_DEVELOPER_TOOLS)
+  //     .then(name => console.log(`Added Extension:  ${name}`))
+  //     .catch(error => console.log(`An error occurred: , ${error}`));
+  // }
 }); // UPDATED!
 
 // Quit when all windows are closed, except on macOS. There, it's common

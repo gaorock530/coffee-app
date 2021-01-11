@@ -10,7 +10,7 @@ const Accordion = withStyles({
     width: '100%',
     border: '1px solid rgba(0, 0, 0, .125)',
     boxShadow: 'none',
-    backgroundColor: '#999',
+    backgroundColor: '#333',
     color: '#fff',
     '&:not(:last-child)': {
       borderBottom: 0,

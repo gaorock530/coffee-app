@@ -1,5 +1,5 @@
 import React from 'react'
-import CircularProgress from '@material-ui/core/CircularProgress';
+import {CircularProgress, Backdrop} from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -8,13 +8,36 @@ import { makeStyles } from '@material-ui/core/styles'
 import QRCode from '../components/qrcode'
 import Form from '../components/loginForm'
 
-export default function Login ({onLogin}) {
-  const [logging, setLogging] = React.useState(false)
+const prograssStyles = makeStyles({
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    zIndex: '1',
+    backgroundColor: "rgba(0,0,0,0.8)"
+  }
+})
 
+
+export default function Login ({login}) {
+  const [logging, setLogging] = React.useState(false)
+  const prograssClass = prograssStyles()
+
+  const onSubmit = v => {
+    setLogging(true)
+    setTimeout(() => {
+      setLogging(false)
+      login()
+    }, 5000)
+    console.log('submit', v)
+  }
   
   return (
     <div className="login">
-      {logging?<CircularProgress />:<LoginForm />}      
+      <Backdrop open={!logging} className={prograssClass.root}>
+        <div style={{fontSize: '1.5rem', color: '#fff', margin: '10px 0'}}>登陆中</div>
+        <CircularProgress color="secondary"/>
+      </Backdrop>
+      <LoginForm onSubmit={onSubmit}/>
     </div>
   )
 }
@@ -27,7 +50,7 @@ const formWrapperStyles = makeStyles({
   root: {
     position: 'relative',
     width: '500px',
-    
+    zIndex: '0'
   }
 })
 
@@ -48,7 +71,7 @@ const tabStyles = makeStyles({
 })
 
 
-function LoginForm () {
+function LoginForm ({onSubmit}) {
   const formClass = formWrapperStyles()
   const formTabClass = formTabStyles()
   const tabClass = tabStyles()
@@ -80,7 +103,7 @@ function LoginForm () {
         </svg>}
       </div>
       <div className="login-wrapper">
-        {!value?<Form/>:<QRCode/>}
+        {!value?<Form onSubmit={onSubmit}/>:<QRCode/>}
       </div>
     </Paper>
   );

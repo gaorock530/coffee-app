@@ -10,6 +10,7 @@ header {
 .header-drag {
   -webkit-app-region: drag;
   /* background: chocolate; */
+  z-index: 999;
   flex: 1;
 }
 

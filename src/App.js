@@ -48,7 +48,7 @@ function App() {
         </div>
         {!isMac && <Control max={handleMaxWindow}/>}
       </header>
-      {!login?<Body/>:<Login onLogin={onLogin}/>}
+      {login?<Body/>:<Login login={onLogin}/>}
     </div>
   );
 }
