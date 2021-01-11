@@ -43,6 +43,11 @@ function createWindow() {
       }
     });
   }
+
+  win.on('close', () => {
+    console.log('close event recived!')
+    win.destroy()
+  })
   
 
   // and load the index.html of the app.
@@ -75,6 +80,19 @@ function createWindow() {
     
   })
 
+  // minify
+  ipcMain.on('winHide', (e, arg) => {
+    console.log('win hide event targered', arg, typeof arg, win.isMaximized())
+    win.minimize()
+  })
+
+
+  // quit app
+  ipcMain.on('winQuit', (e, arg) => {
+    console.log('win quit event targered', arg, typeof arg, win.isMaximized())
+    win.close()
+    // win.destroy()
+  })
 
 }
 

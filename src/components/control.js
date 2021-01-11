@@ -1,12 +1,12 @@
 import React from 'react'
-import {Close, IndeterminateCheckBoxOutlined, OpenInNewOutlined} from '@material-ui/icons'
+import {Close, IndeterminateCheckBoxOutlined, Fullscreen} from '@material-ui/icons'
 
-export default function Control ({max}) {
+export default function Control ({max, mini, quit}) {
   return (
     <div className="win-control">
-      <li><OpenInNewOutlined fontSize="small" onClick={max}/></li>
-      <li><IndeterminateCheckBoxOutlined fontSize="small"/></li>
-      <li><Close fontSize="small"/></li>
+      <li><Fullscreen onClick={max}/></li>
+      <li><IndeterminateCheckBoxOutlined fontSize="small" onClick={mini}/></li>
+      <li><Close onClick={quit}/></li>
     </div>
   )
 }

@@ -27,14 +27,14 @@ export default function Login ({login}) {
     setTimeout(() => {
       setLogging(false)
       login()
-    }, 5000)
+    }, 2000)
     console.log('submit', v)
   }
   
   return (
     <div className="login">
-      <Backdrop open={!logging} className={prograssClass.root}>
-        <div style={{fontSize: '1.5rem', color: '#fff', margin: '10px 0'}}>登陆中</div>
+      <Backdrop open={logging} className={prograssClass.root}>
+        <div style={{fontSize: '1.3rem', color: '#fff', margin: '10px 0'}}>登陆中</div>
         <CircularProgress color="secondary"/>
       </Backdrop>
       <LoginForm onSubmit={onSubmit}/>

@@ -34,6 +34,20 @@ function App() {
     }
   }
 
+  const handleMinWindow = () => {
+    if (isElectron()) {
+      console.log('sending \'mini\' event:')
+      window.ipcRenderer.send('winHide', true)
+    }
+  }
+
+  const handleQuitApp = () => {
+    if (isElectron()) {
+      console.log('sending \'quit\' event:')
+      window.ipcRenderer.send('winQuit', true)
+    }
+  }
+
   const onLogin = () => {
     setLogin(true)
   }
@@ -46,7 +60,7 @@ function App() {
         <div className="info">
           Coffee Relax
         </div>
-        {!isMac && <Control max={handleMaxWindow}/>}
+        {!isMac && <Control max={handleMaxWindow} mini={handleMinWindow} quit={handleQuitApp}/>}
       </header>
       {login?<Body/>:<Login login={onLogin}/>}
     </div>

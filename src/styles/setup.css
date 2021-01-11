@@ -23,6 +23,10 @@ ul, li {
   text-decoration: none;
 }
 
+.animate {
+  transition: all 300ms ease-in-out;
+}
+
 /*
   Scroll Bar
 */
