@@ -2,9 +2,11 @@ import React from 'react'
 import ControlledAccordions from '../components/sidebar'
 import { Breadcrumbs, Link, Typography } from '@material-ui/core'
 
+
 const menu = [
   {
     title: '员工管理',
+    icon: 'AccountCircle',
     id: 1,
     list: [
       {title: '员工配置', link: '', active: false, id: 1},
@@ -15,6 +17,7 @@ const menu = [
   },
   {
     title: '会员管理',
+    icon: 'Pets',
     id: 2,
     list: [
       {title: '会员统计', link: '', active: false, id: 5},
@@ -25,6 +28,7 @@ const menu = [
   },
   {
     title: '商品管理',
+    icon: 'Rowing',
     id: 3,
     list: [
       {title: '商品配置', link: '', active: false, id: 9},
@@ -35,6 +39,7 @@ const menu = [
   },
   {
     title: '娱乐系统',
+    icon: 'ShutterSpeed',
     id: 4,
     list: [
       {title: '游戏统计', link: '', active: false, id: 13},
@@ -45,6 +50,7 @@ const menu = [
   },
   {
     title: '收入分析',
+    icon: 'SportsKabaddi',
     id: 5,
     list: [
       {title: '1', link: '', active: false, id: 17},
@@ -55,6 +61,7 @@ const menu = [
   },
   {
     title: '分享管理',
+    icon: 'NightsStay',
     id: 6,
     list: [
       {title: '1', link: '', active: false, id: 21},

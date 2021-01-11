@@ -4,6 +4,8 @@ import MuiAccordion from '@material-ui/core/Accordion';
 import MuiAccordionSummary from '@material-ui/core/AccordionSummary';
 import MuiAccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
+import { NightsStay, Pets, Rowing, ShutterSpeed, SportsKabaddi, AccountCircle } from '@material-ui/icons'
+
 
 const Accordion = withStyles({
   root: {
@@ -34,6 +36,9 @@ const AccordionSummary = withStyles({
     '&$expanded': {
       minHeight: 56,
     },
+    '&:hover i': {
+      color: '#F30963'
+    }
   },
   content: {
     '&$expanded': {
@@ -50,6 +55,13 @@ const AccordionDetails = withStyles((theme) => ({
     flexDirection: 'column',
   },
 }))(MuiAccordionDetails);
+
+const TextTypography = withStyles((theme) => ({
+  root: {
+    display: 'flex',
+    flexDirection: 'row',
+  },
+}))(Typography);
 
 export default function CustomizedAccordions({menu = [], onClickMenu, active, expanded, handleExpend}) {
   
@@ -69,7 +81,7 @@ export default function CustomizedAccordions({menu = [], onClickMenu, active, ex
       {menu.map((option, optionIdx) => (
         <Accordion square expanded={expanded === option.id} onChange={handleExpend.bind(this, option.id)} key={option.id}>
           <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-            <Typography>{option.title}</Typography>
+            <TextTypography><span>{option.title}</span><i style={{padding: '0 10px'}}>{findIcon(option.icon)}</i></TextTypography>
           </AccordionSummary>
           <AccordionDetails>
             {option.list.map((item, itemIdx) => <li className={active === item.id?'active': null} key={item.id} onClick={onClick.bind(this, item.id, [optionIdx, itemIdx])}>{item.title}</li>)}
@@ -78,4 +90,24 @@ export default function CustomizedAccordions({menu = [], onClickMenu, active, ex
       ))}
     </>
   );
+      
+}
+
+function findIcon (icon) {
+  switch (icon) {
+    case 'NightsStay':
+      return <NightsStay />
+    case 'Pets':
+      return <Pets />
+    case 'Rowing':
+      return <Rowing />
+    case 'ShutterSpeed':
+      return <ShutterSpeed />
+    case 'SportsKabaddi':
+      return <SportsKabaddi />
+    case 'AccountCircle':
+      return <AccountCircle />
+    default:
+      return <AccountCircle/>
+  }
 }
