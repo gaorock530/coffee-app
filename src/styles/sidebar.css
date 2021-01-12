@@ -4,7 +4,7 @@ aside {
   width: 245px;
   left: 0;
   top: 0;
-  background-color: #ccc;
+  background-color: #555;
   overflow-y: scroll;
   overflow-x: hidden;
 }
