@@ -12,7 +12,7 @@ const Accordion = withStyles({
     width: '100%',
     border: '1px solid rgba(0, 0, 0, .125)',
     boxShadow: 'none',
-    backgroundColor: '#333',
+    backgroundColor: '#555',
     color: '#fff',
     '&:not(:last-child)': {
       borderBottom: 0,
@@ -81,7 +81,7 @@ export default function CustomizedAccordions({menu = [], onClickMenu, active, ex
       {menu.map((option, optionIdx) => (
         <Accordion square expanded={expanded === option.id} onChange={handleExpend.bind(this, option.id)} key={option.id}>
           <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-            <TextTypography><span>{option.title}</span><i style={{padding: '0 10px'}}>{findIcon(option.icon)}</i></TextTypography>
+            <TextTypography><span>{option.title}</span><i style={{display: 'block', width: '50px', textAlign: 'center'}}>{findIcon(option.icon)}</i></TextTypography>
           </AccordionSummary>
           <AccordionDetails>
             {option.list.map((item, itemIdx) => <li className={active === item.id?'active': null} key={item.id} onClick={onClick.bind(this, item.id, [optionIdx, itemIdx])}>{item.title}</li>)}
