@@ -11,6 +11,7 @@
 - [Iconset: Papirus Apps Icons by Papirus Development Team (1418 icons)](https://www.iconarchive.com/show/papirus-apps-icons-by-papirus-team.26.html)
 - [draw.io](https://app.diagrams.net/#Hgaorock530%2Fbrainstorm%2Fmain%2Fcoffeeshop.svg)
 - [网易云音乐 API](https://binaryify.github.io/NeteaseCloudMusicApi/#/?id=neteasecloudmusicapi)
+- [QQ音乐API](https://jsososo.github.io/QQMusicApi)([koaAPI](https://rain120.github.io/qq-music-api/))
 - [http://music.163.com/api/search/get/web?s=%E9%82%93%E7%B4%AB%E6%A3%8B&type=10](http://music.163.com/api/search/get/web?s=%E9%82%93%E7%B4%AB%E6%A3%8B&type=10)
 - [2019最新QQ音乐Api](https://blog.csdn.net/qq_41979349/article/details/102458551)
 - [QQ音乐开源API下载收费歌曲](https://www.52pojie.cn/thread-1008496-1-1.html)
