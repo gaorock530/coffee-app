@@ -21,3 +21,18 @@ aside li:hover {
 aside li.active {
   background-color: #F30963;
 }
+
+aside a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  padding: 16px;
+}
+
+aside a:hover {
+  background-color: rgba(243, 9, 99, 0.5);
+}
+
+aside a.active {
+  background-color: #F30963;
+}

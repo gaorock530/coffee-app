@@ -60,7 +60,7 @@ function App() {
         <div className="info">
           Coffee Relax
         </div>
-        {!isMac && <Control max={handleMaxWindow} mini={handleMinWindow} quit={handleQuitApp}/>}
+        {!isMac && isElectron() && <Control max={handleMaxWindow} mini={handleMinWindow} quit={handleQuitApp}/>}
       </header>
       {login?<Body/>:<Login login={onLogin}/>}
     </div>

@@ -1,6 +1,11 @@
 import React from 'react'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom"
 import ControlledAccordions from '../components/sidebar'
-import { Breadcrumbs, Link, Typography } from '@material-ui/core'
+import { Breadcrumbs, Typography } from '@material-ui/core'
 
 
 const menu = [
@@ -9,9 +14,9 @@ const menu = [
     icon: 'AccountCircle',
     id: 1,
     list: [
-      {title: '员工配置', link: '', active: false, id: 1},
-      {title: '2', link: '', active: false, id: 2},
-      {title: '3', link: '', active: false, id: 3},
+      {title: '员工配置', link: '/', active: false, id: 1},
+      {title: '2', link: '/about', active: false, id: 2},
+      {title: '3', link: '/dashboard', active: false, id: 3},
       {title: '4', link: '', active: false, id: 4}
     ]
   },
@@ -98,30 +103,44 @@ export default function Body () {
 
 
   return (
-    <main>
-      <aside>
-        <ControlledAccordions menu={menu} onClickMenu={onClickMenu} active={active} handleExpend={handleExpend} expanded={expanded}/>
-      </aside>
-      <section>
-        <nav>
-          <Breadcrumbs aria-label="breadcrumb">
-            <Link color="inherit" href="#" onClick={handleClick}>
-              {menu[breadcrumb[0]].title}
-            </Link>
+    <Router>
+      <main>
+        <aside>
+          <ControlledAccordions menu={menu} onClickMenu={onClickMenu} active={active} handleExpend={handleExpend} expanded={expanded}/>
+        </aside>
+        <section>
+          <nav>
+            <Breadcrumbs aria-label="breadcrumb">
+              <div color="inherit" href="#" onClick={handleClick}>
+                {menu[breadcrumb[0]].title}
+              </div>
 
-            <Typography color="textPrimary">{menu[breadcrumb[0]].list[breadcrumb[1]].title}</Typography>
-          </Breadcrumbs>
-        </nav>
-        <div className="main-content">
-            <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
-            <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
-            <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
-            <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
-            <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
-            <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
-            <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
-        </div>
-      </section>
-    </main>
+              <Typography color="textPrimary">{menu[breadcrumb[0]].list[breadcrumb[1]].title}</Typography>
+            </Breadcrumbs>
+          </nav>
+          <Switch>
+            <Route exact path="/">
+              <div className="main-content">
+                <div>homepage</div>
+                <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
+                <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
+                <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
+                <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
+                <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
+                <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
+                <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
+              </div>
+            </Route>
+            <Route path="/about">
+              <div>about</div>
+            </Route>
+            <Route path="/dashboard">
+              <div>dashboard</div>
+            </Route>
+          </Switch>
+          
+        </section>
+      </main>
+    </Router>
   )
 }

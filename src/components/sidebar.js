@@ -1,4 +1,7 @@
 import React from 'react';
+import {
+  Link
+} from "react-router-dom"
 import { withStyles } from '@material-ui/core/styles';
 import MuiAccordion from '@material-ui/core/Accordion';
 import MuiAccordionSummary from '@material-ui/core/AccordionSummary';
@@ -84,7 +87,7 @@ export default function CustomizedAccordions({menu = [], onClickMenu, active, ex
             <TextTypography><span>{option.title}</span><i style={{display: 'block', width: '50px', textAlign: 'center'}}>{findIcon(option.icon)}</i></TextTypography>
           </AccordionSummary>
           <AccordionDetails>
-            {option.list.map((item, itemIdx) => <li className={active === item.id?'active': null} key={item.id} onClick={onClick.bind(this, item.id, [optionIdx, itemIdx])}>{item.title}</li>)}
+            {option.list.map((item, itemIdx) => <Link to={item.link} className={active === item.id?'active': null} key={item.id} onClick={onClick.bind(this, item.id, [optionIdx, itemIdx])}>{item.title}</Link>)}
           </AccordionDetails>
         </Accordion>
       ))}
