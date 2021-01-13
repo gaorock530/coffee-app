@@ -2,11 +2,15 @@ const path = require("path");
 const isDev = require("electron-is-dev");
 const { BrowserWindow, ipcMain } = require('electron')
 
+const initialNewWin = require('./openWin')
+
 const WIDTH = 1200
 const HEIGHT = 800
 
-function createWindow() {
 
+
+function createWindow() {
+  initialNewWin()
   let win
   // Create the browser window.
   // windows setup

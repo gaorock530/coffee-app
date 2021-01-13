@@ -101,6 +101,12 @@ export default function Body () {
     setExpanded(breadcrumb[0]+1)
   }
 
+  // expirement
+  const openQQ = () => {
+    console.log('openQQ')
+    window.ipcRenderer.send('openWin', 'http://y.qq.com')
+  }
+
 
   return (
     <Router>
@@ -121,7 +127,7 @@ export default function Body () {
           <Switch>
             <Route exact path="/">
               <div className="main-content">
-                <div>homepage</div>
+                <div onClick={openQQ}>homepage</div>
                 <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
                 <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
                 <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
