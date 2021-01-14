@@ -27,17 +27,35 @@ section {
   /* filter: blur(10px); */
 }
 
-.music-icon {
+.music-top-banner {
   position: absolute;
   right: 11px;
+  height: 30px;
+  background-color: red;
+  z-index: 5;
+}
+
+.music-icon {
+  position: absolute;
+  right: 0;
   top: 50%;
-  transform: translateY(-50%);
   width: 30px;
   height: 30px;
+  transform: translate(50px, -50%);
   background-image: url('/src/assets/disk.svg');
   background-size: cover;
   z-index: 5;
+  transition: transform 1s linear;
 }
+
+.music-icon.mounted {
+  transform: translate(0, -50%) rotate(-360deg);
+}
+
+/* .music-icon.unmount {
+  transform: translateX(50px) rotate(360deg);
+} */
+
 
 /* .music-icon:hover {
   animation: rotate 2s linear infinite;
@@ -53,5 +71,14 @@ section {
   }
   to {
     transform: translateY(-50%) rotate(360deg);
+  }
+}
+
+@keyframes mountDisk {
+  form {
+    transform: translateX(-100px);
+  }
+  to {
+    transform: translateX(0);
   }
 }

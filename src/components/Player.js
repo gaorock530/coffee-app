@@ -1,7 +1,7 @@
 import React from 'react'
 import { DataContext } from '../contexts/mainContext'
-import { MUSIC_TOGGLE_PLAY } from '../actions/music_action'
-import {PlayArrow, Pause, SkipNext, SkipPrevious, VolumeDown, GraphicEq} from '@material-ui/icons'
+import { MUSIC_TOGGLE_PLAY, MUSIC_MOUNT, MUSIC_UNMOUNT } from '../actions/music_action'
+import {PlayArrow, Pause, SkipNext, SkipPrevious, VolumeDown, VolumeUp, GraphicEq, VolumeOff} from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
 import { Slider } from '@material-ui/core';
 
@@ -17,17 +17,35 @@ const contorlStyle = makeStyles({
 
 export default function Player () {
   const controlClass = contorlStyle()
-  const [value, setValue] = React.useState(50);
-  const [{music_playing}, dispatch] = React.useContext(DataContext)
-
+  const [volume, setVolume] = React.useState(50);
+  const muteVolume = React.useRef(volume)
+  const [{music_playing, music_info}, dispatch] = React.useContext(DataContext)
 
   const handleVolumeChange = (e, newValue) => {
-    console.log(newValue);
-    setValue(newValue);
+    setVolume(newValue);
+    muteVolume.current = volume
   };
+
+  const setMute = () => {
+    if (volume > 0) setVolume(0)
+    else setVolume(muteVolume.current< 10? 20: muteVolume.current)
+  }
 
   const handleMusicPlay = () => {
     dispatch({type: MUSIC_TOGGLE_PLAY})
+  }
+
+  const volumeIcon = (vol) => {
+    switch (true) {
+      case vol>50:
+        return <VolumeUp/>
+      case vol>=1:
+        return <VolumeDown/>
+      case vol === 0:
+        return <VolumeOff />
+      default:
+        return <VolumeDown/>
+    }
   }
 
 
@@ -45,9 +63,9 @@ export default function Player () {
       </div>
       <div className="music-control">
         <div className="music-control-button">
-          <li><SkipPrevious/></li>
+          <li onClick={() => dispatch({type: MUSIC_MOUNT})}><SkipPrevious/></li>
           <li className="music-control-button-play" onClick={handleMusicPlay}>{!music_playing?<PlayArrow className={controlClass.root} fontSize="large"/>:<Pause className={controlClass.root} fontSize="large"/>}</li>
-          <li><SkipNext/></li>
+          <li onClick={() => dispatch({type: MUSIC_UNMOUNT})}><SkipNext /></li>
         </div>
         <div className="music-prograss">
           <span>00:00</span>
@@ -63,9 +81,10 @@ export default function Player () {
       <div className="music-utils">
         <div><GraphicEq style={{fontSize: '1.7rem'}}/></div>
         <div className="music-utils-volume">
-          <VolumeDown style={{fontSize: '2rem'}}/>
+          <div onClick={setMute}>{volumeIcon(volume)}</div>
+          {/* <VolumeDown style={{fontSize: '2rem'}}/> */}
           <Slider
-            value={value}
+            value={volume}
             min={0}
             step={1}
             max={100}

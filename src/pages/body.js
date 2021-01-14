@@ -22,7 +22,7 @@ import Music from '../router/music'
 
 
 export default function Body () {
-  const [{music_playing}, dispatch] = React.useContext(DataContext)
+  const [{music_playing, music_info}, dispatch] = React.useContext(DataContext)
 
 
   const [breadcrumb, setBreadCrumb] = React.useState([0, 0])    // stores index
@@ -76,7 +76,9 @@ export default function Body () {
               </div>
               <Typography color="textPrimary">{menu[breadcrumb[0]].list[breadcrumb[1]].title}</Typography>
             </Breadcrumbs>
-            <Link to="/music/order" className={`${music_playing?'play':''} music-icon`} onClick={handleClickIcon}/>
+            <div className="music-top-banner">
+              <Link to="/music/order" className={`${music_playing?'play':''} ${music_info?'mounted':''} music-icon`} onClick={handleClickIcon}/>
+            </div>
           </nav>
           <div className="main-content">
           <Switch>

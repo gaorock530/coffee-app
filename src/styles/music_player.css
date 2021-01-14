@@ -48,6 +48,7 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  transition: all 200ms linear;
 }
 /* .music-info-cover-effect {
   position: absolute;
@@ -59,6 +60,7 @@
 
 .music-info-cover-wrapper:hover .music-info-cover{
   filter: blur(2px);
+  transform: scale(1.1);
 }
 /* .music-info-cover-wrapper:hover .music-info-cover-effect{
   display: initial;
@@ -213,10 +215,15 @@
 
 .music-utils-volume {
   min-width: 50px;
-  max-width: 120px;
+  max-width: 150px;
   width: 50%;
 }
 
-.music-utils-volume>svg {
-  margin: 0 10px;
+.music-utils-volume>div {
+  display: flex;
+  align-items: center;
+}
+
+.music-utils-volume svg {
+  margin: 0 20px;
 }
