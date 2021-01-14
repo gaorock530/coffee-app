@@ -1,12 +1,12 @@
 
 
 const { app, BrowserWindow } = require("electron");
-const isDev = require("electron-is-dev");
+// const isDev = require("electron-is-dev");
 
 const createWindow = require('./window')
 
 // Conditionally include the dev tools installer to load React Dev Tools
-let installExtension, REACT_DEVELOPER_TOOLS; // NEW!
+// let installExtension, REACT_DEVELOPER_TOOLS; // NEW!
 
 
 // if (isDev) {

@@ -10,13 +10,14 @@ const buttonStyles = makeStyles({
 })
 
 export default function Login ({onSubmit}) {
-  const buttonClass = buttonStyles()
-  // const [logging, setLogging] = React.useState(false)
+  const [phone, setPhone] = React.useState('')
+  const [pass, setPass] = React.useState('')
 
+  const buttonClass = buttonStyles()
 
   const handleSubmit = e => {
     e.preventDefault()
-    onSubmit(123)
+    onSubmit({phone, pass})
   }
 
   return (
@@ -31,6 +32,8 @@ export default function Login ({onSubmit}) {
             placeholder="13688886666"
             variant="outlined"
             color="primary"
+            value={phone}
+            onChange={e => setPhone(e.target.value)}
         />
         </Grid>
         <Grid item xs={12}>
@@ -43,6 +46,8 @@ export default function Login ({onSubmit}) {
             placeholder="********"
             variant="outlined"
             color="primary"
+            value={pass}
+            onChange={e => setPass(e.target.value)}
           />
         </Grid>
         <Grid item xs={6}>

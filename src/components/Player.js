@@ -1,0 +1,82 @@
+import React from 'react'
+import { DataContext } from '../contexts/mainContext'
+import { MUSIC_TOGGLE_PLAY } from '../actions/music_action'
+import {PlayArrow, Pause, SkipNext, SkipPrevious, VolumeDown, GraphicEq} from '@material-ui/icons'
+import { makeStyles } from '@material-ui/core/styles'
+import { Slider } from '@material-ui/core';
+
+
+const contorlStyle = makeStyles({
+  root: {
+    position: 'relative',
+    zIndex: 1
+  }
+})
+
+
+
+export default function Player () {
+  const controlClass = contorlStyle()
+  const [value, setValue] = React.useState(50);
+  const [{music_playing}, dispatch] = React.useContext(DataContext)
+
+
+  const handleVolumeChange = (e, newValue) => {
+    console.log(newValue);
+    setValue(newValue);
+  };
+
+  const handleMusicPlay = () => {
+    dispatch({type: MUSIC_TOGGLE_PLAY})
+  }
+
+
+  return (
+    <div className="music-player-banner">
+      <div className="music-info">
+        <div className="music-info-cover-wrapper">
+          <div className="music-info-cover" style={{ backgroundImage: `url(${'/assets/logo.svg'})`}}></div>
+          <div className="music-info-cover-effect"></div>
+        </div>
+        <div className="music-info-text">
+          <p>title</p>
+          <p>description</p>
+        </div>
+      </div>
+      <div className="music-control">
+        <div className="music-control-button">
+          <li><SkipPrevious/></li>
+          <li className="music-control-button-play" onClick={handleMusicPlay}>{!music_playing?<PlayArrow className={controlClass.root} fontSize="large"/>:<Pause className={controlClass.root} fontSize="large"/>}</li>
+          <li><SkipNext/></li>
+        </div>
+        <div className="music-prograss">
+          <span>00:00</span>
+          <div className="music-prograss-control">
+            <div className="music-prograss-control-base"></div>
+            <div className="music-prograss-control-bar">
+                <div className="music-prograss-control-point"></div>
+              </div>
+          </div>
+          <span>04:00</span>
+        </div>
+      </div>
+      <div className="music-utils">
+        <div><GraphicEq style={{fontSize: '1.7rem'}}/></div>
+        <div className="music-utils-volume">
+          <VolumeDown style={{fontSize: '2rem'}}/>
+          <Slider
+            value={value}
+            min={0}
+            step={1}
+            max={100}
+            color="secondary"
+            onChange={handleVolumeChange}
+            valueLabelDisplay="off"
+            aria-labelledby="non-linear-slider"
+          />
+        </div>
+        
+      </div>
+    </div>
+  )
+}

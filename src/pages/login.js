@@ -1,4 +1,7 @@
 import React from 'react'
+import { DataContext } from '../contexts/mainContext'
+import { LOGIN } from '../actions/main_action'
+
 import {CircularProgress, Backdrop} from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
@@ -19,7 +22,9 @@ const prograssStyles = makeStyles({
 })
 
 
-export default function Login ({login}) {
+export default function Login () {
+  const [, dispatch] = React.useContext(DataContext)
+
   const [logging, setLogging] = React.useState(false)
   const prograssClass = prograssStyles()
 
@@ -27,9 +32,9 @@ export default function Login ({login}) {
     setLogging(true)
     setTimeout(() => {
       setLogging(false)
-      login()
+      dispatch({type: LOGIN, payload: 'Magic'})
     }, 2000)
-    console.log('submit', v)
+    console.log('Login submit:', v)
   }
   
   return (

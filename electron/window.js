@@ -10,7 +10,8 @@ const HEIGHT = 800
 
 
 function createWindow() {
-  initialNewWin()
+  initialNewWin()   // handle QQ cookies with New Window
+
   let win
   // Create the browser window.
   // windows setup
@@ -19,6 +20,7 @@ function createWindow() {
       width: WIDTH,
       height: HEIGHT,
       frame: false,
+      useContentSize: true,
       // titleBarStyle: 'hidden',
       // titleBarStyle: 'customButtonsOnHover',
       titleBarStyle: 'hidden',
@@ -47,6 +49,15 @@ function createWindow() {
       }
     });
   }
+
+  // const mainWebContents = win.webContents
+
+  // mainWebContents.on('did-finish-load',() => {
+  //   mainWebContents.setZoomFactor(1)
+  //   mainWebContents.setVisualZoomLevelLimits(1,1)
+  //   mainWebContents.setLayoutZoomLevelLimits(0,0)
+  // })
+
 
   win.on('close', () => {
     console.log('close event recived!')

@@ -6,14 +6,16 @@ section {
   overflow: hidden;
 }
 
-section nav {
+.navigation {
   position: relative;
-  display: block;
+  display: flex;
+  align-items: center;
+  height: 45px;
   width: 100%;
   left: 0;
   top: 0;
   background-color: #ccc;
-  padding: 3px 5px;
+  padding: 0 5px;
   z-index: 2;
 }
 
@@ -22,4 +24,34 @@ section nav {
   z-index: 1;
   overflow-x: hidden;
   overflow-y: scroll;
+  /* filter: blur(10px); */
+}
+
+.music-icon {
+  position: absolute;
+  right: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 30px;
+  height: 30px;
+  background-image: url('/src/assets/disk.svg');
+  background-size: cover;
+  z-index: 5;
+}
+
+/* .music-icon:hover {
+  animation: rotate 2s linear infinite;
+} */
+
+.music-icon.play {
+  animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: translateY(-50%) rotate(0deg);
+  }
+  to {
+    transform: translateY(-50%) rotate(360deg);
+  }
 }

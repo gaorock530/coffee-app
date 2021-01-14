@@ -7,7 +7,7 @@ import MuiAccordion from '@material-ui/core/Accordion';
 import MuiAccordionSummary from '@material-ui/core/AccordionSummary';
 import MuiAccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
-import { NightsStay, Pets, Rowing, ShutterSpeed, SportsKabaddi, AccountCircle } from '@material-ui/icons'
+import { NightsStay, Pets, Rowing, ShutterSpeed, SportsKabaddi, AccountCircle, MusicNote } from '@material-ui/icons'
 
 
 const Accordion = withStyles({
@@ -68,26 +68,15 @@ const TextTypography = withStyles((theme) => ({
 
 export default function CustomizedAccordions({menu = [], onClickMenu, active, expanded, handleExpend}) {
   
-  // const [active, setActive] = React.useState(1)
-
-  // const handleChange = (panel) => (event, newExpanded) => {
-  //   setExpanded(newExpanded ? panel : false);
-  // };
-
-  const onClick = (id, level) => {
-    onClickMenu(level, id)
-    // setActive(id)
-  }
-
   return (
     <>
       {menu.map((option, optionIdx) => (
         <Accordion square expanded={expanded === option.id} onChange={handleExpend.bind(this, option.id)} key={option.id}>
           <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-            <TextTypography><span>{option.title}</span><i style={{display: 'block', width: '50px', textAlign: 'center'}}>{findIcon(option.icon)}</i></TextTypography>
+            <TextTypography><i>{findIcon(option.icon)}</i><span>{option.title}</span></TextTypography>
           </AccordionSummary>
           <AccordionDetails>
-            {option.list.map((item, itemIdx) => <Link to={item.link} className={active === item.id?'active': null} key={item.id} onClick={onClick.bind(this, item.id, [optionIdx, itemIdx])}>{item.title}</Link>)}
+            {option.list.map((item, itemIdx) => <Link to={item.link} className={active === item.id?'active': null} key={item.id} onClick={onClickMenu.bind(this, [optionIdx, itemIdx], item.id)}>{item.title}</Link>)}
           </AccordionDetails>
         </Accordion>
       ))}
@@ -110,6 +99,8 @@ function findIcon (icon) {
       return <SportsKabaddi />
     case 'AccountCircle':
       return <AccountCircle />
+    case 'MusicNote':
+      return <MusicNote />
     default:
       return <AccountCircle/>
   }

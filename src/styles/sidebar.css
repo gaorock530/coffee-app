@@ -7,6 +7,11 @@ aside {
   background-color: #555;
   overflow-y: scroll;
   overflow-x: hidden;
+  z-index: 10;
+}
+
+aside span {
+  padding: 0 10px;
 }
 
 aside li {
@@ -15,11 +20,11 @@ aside li {
 }
 
 aside li:hover {
-  background-color: rgba(243, 9, 99, 0.5);
+  background-color: var(--color-secondary-rgba);
 }
 
 aside li.active {
-  background-color: #F30963;
+  background-color: var(--color-secondary);
 }
 
 aside a {
@@ -30,9 +35,9 @@ aside a {
 }
 
 aside a:hover {
-  background-color: rgba(243, 9, 99, 0.5);
+  background-color: var(--color-secondary-rgba);
 }
 
 aside a.active {
-  background-color: #F30963;
+  background-color: var(--color-secondary);
 }

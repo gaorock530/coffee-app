@@ -1,3 +1,4 @@
+@import './const.css';
 @import './setup.css';
 @import './app.css';
 @import './sidebar.css';
@@ -5,3 +6,4 @@
 
 
 @import './login.css';
+@import './music_player.css';

@@ -1,88 +1,33 @@
 import React from 'react'
+import { DataContext } from '../contexts/mainContext'
+// import { MUSIC_TOGGLE_PLAY } from '../actions/music_action'
+
+
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  Link
 } from "react-router-dom"
+
+// components
 import ControlledAccordions from '../components/sidebar'
 import { Breadcrumbs, Typography } from '@material-ui/core'
 
+// data
+import menu from '../data/sidebarList'
 
-const menu = [
-  {
-    title: '员工管理',
-    icon: 'AccountCircle',
-    id: 1,
-    list: [
-      {title: '员工配置', link: '/', active: false, id: 1},
-      {title: '2', link: '/about', active: false, id: 2},
-      {title: '3', link: '/dashboard', active: false, id: 3},
-      {title: '4', link: '', active: false, id: 4}
-    ]
-  },
-  {
-    title: '会员管理',
-    icon: 'Pets',
-    id: 2,
-    list: [
-      {title: '会员统计', link: '', active: false, id: 5},
-      {title: '加入会员', link: '', active: false, id:6},
-      {title: '3', link: '', active: false, id: 7},
-      {title: '4', link: '', active: false, id: 8}
-    ]
-  },
-  {
-    title: '商品管理',
-    icon: 'Rowing',
-    id: 3,
-    list: [
-      {title: '商品配置', link: '', active: false, id: 9},
-      {title: '活动配置', link: '', active: false, id: 10},
-      {title: '3', link: '', active: false, id: 11},
-      {title: '4', link: '', active: false, id: 12}
-    ]
-  },
-  {
-    title: '娱乐系统',
-    icon: 'ShutterSpeed',
-    id: 4,
-    list: [
-      {title: '游戏统计', link: '', active: false, id: 13},
-      {title: '2', link: '', active: false, id: 14},
-      {title: '3', link: '', active: false, id: 15},
-      {title: '4', link: '', active: false, id: 16}
-    ]
-  },
-  {
-    title: '收入分析',
-    icon: 'SportsKabaddi',
-    id: 5,
-    list: [
-      {title: '1', link: '', active: false, id: 17},
-      {title: '2', link: '', active: false, id: 18},
-      {title: '3', link: '', active: false, id: 19},
-      {title: '4', link: '', active: false, id: 20}
-    ]
-  },
-  {
-    title: '分享管理',
-    icon: 'NightsStay',
-    id: 6,
-    list: [
-      {title: '1', link: '', active: false, id: 21},
-      {title: '2', link: '', active: false, id: 22},
-      {title: '3', link: '', active: false, id: 23},
-      {title: '4', link: '', active: false, id: 24}
-    ]
-  }
-]
+// routers
+import Music from '../router/music'
 
 
 export default function Body () {
+  const [{music_playing}, dispatch] = React.useContext(DataContext)
 
-  const [breadcrumb, setBreadCrumb] = React.useState([0, 0])
-  const [active, setActive] = React.useState(1)
-  const [expanded, setExpanded] = React.useState(1)
+
+  const [breadcrumb, setBreadCrumb] = React.useState([0, 0])    // stores index
+  const [active, setActive] = React.useState(1)                 // stores ID
+  const [expanded, setExpanded] = React.useState(1)             // stores ID
 
   const onClickMenu = (level, id) => {
     if (id === active) return
@@ -96,15 +41,24 @@ export default function Body () {
   }
 
   const handleClick = () => {
-    console.log(breadcrumb)
-    if (expanded === breadcrumb[0]+1) return
-    setExpanded(breadcrumb[0]+1)
+    // console.log(breadcrumb)
+    const storedID = menu[breadcrumb[0]].id
+    if (expanded === storedID) return
+    setExpanded(storedID)
   }
 
-  // expirement
+  // experiment
   const openQQ = () => {
     console.log('openQQ')
     window.ipcRenderer.send('openWin', 'http://y.qq.com')
+  }
+
+  // manually handle clicking music spinning icon
+  const handleClickIcon = () => {
+    if (active !== 30) onClickMenu([4, 0], 30)
+    const storedID = menu[4].id
+    if (expanded === storedID) return
+    setExpanded(storedID)
   }
 
 
@@ -115,18 +69,19 @@ export default function Body () {
           <ControlledAccordions menu={menu} onClickMenu={onClickMenu} active={active} handleExpend={handleExpend} expanded={expanded}/>
         </aside>
         <section>
-          <nav>
+          <nav className="navigation">
             <Breadcrumbs aria-label="breadcrumb">
               <div color="inherit" href="#" onClick={handleClick}>
                 {menu[breadcrumb[0]].title}
               </div>
-
               <Typography color="textPrimary">{menu[breadcrumb[0]].list[breadcrumb[1]].title}</Typography>
             </Breadcrumbs>
+            <Link to="/music/order" className={`${music_playing?'play':''} music-icon`} onClick={handleClickIcon}/>
           </nav>
+          <div className="main-content">
           <Switch>
             <Route exact path="/">
-              <div className="main-content">
+              <>
                 <div onClick={openQQ}>homepage</div>
                 <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
                 <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
@@ -135,7 +90,8 @@ export default function Body () {
                 <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
                 <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
                 <img src="/assets/logo.svg" className="App-logo" alt="logo"/>
-              </div>
+
+              </>
             </Route>
             <Route path="/about">
               <div>about</div>
@@ -143,8 +99,10 @@ export default function Body () {
             <Route path="/dashboard">
               <div>dashboard</div>
             </Route>
+
+            <Route path="/music/:route"><Music /></Route>
           </Switch>
-          
+          </div>
         </section>
       </main>
     </Router>

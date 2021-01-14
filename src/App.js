@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { DataContext } from './contexts/mainContext'
+
 import isElectron from './components/isElectron'
 import {isMac} from './components/isWindows'
 import Control from './components/control'
@@ -10,12 +12,14 @@ import Body from './pages/body'
 
 
 function App() {
+  const [{authorized}] = useContext(DataContext)
+
   const winMax = React.useRef(false)
-  const [login, setLogin] = React.useState(false)
   
-  console.log(isMac)
+  
 
   React.useEffect(() => {
+    console.log('initial App', {isMac})
     if (!isElectron()) return
     window.ipcRenderer.on('winMax', (event, arg) => {
       console.log('ipcRenderer recevied \'max\':', arg)
@@ -48,12 +52,9 @@ function App() {
     }
   }
 
-  const onLogin = () => {
-    setLogin(true)
-  }
-
 
   return (
+    
     <div className="App">
       <header>
         <div className="header-drag" onDoubleClick={handleMaxWindow}></div>
@@ -62,8 +63,9 @@ function App() {
         </div>
         {!isMac && isElectron() && <Control max={handleMaxWindow} mini={handleMinWindow} quit={handleQuitApp}/>}
       </header>
-      {login?<Body/>:<Login login={onLogin}/>}
+      {authorized?<Body/>:<Login/>}
     </div>
+    
   );
 }
 
