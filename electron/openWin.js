@@ -1,4 +1,5 @@
 const path = require("path");
+const axios = require('axios')
 const { BrowserWindow, ipcMain } = require('electron')
 
 
@@ -89,7 +90,11 @@ module.exports = function openWin () {
         const cookieString = cookies.reduce((a, c) => `${a}${c.name}=${c.value};`, '')
         console.log(cookieString)
         console.log('LOGIN IN with QQ ! Success!')
+        const res = await setupCookie(cookieString)
         this.window.close()
+
+        console.log(res || 'Internal ERROR!')
+
       } else {
         const weixinCookie = await this.cookieIns.get({ domain: 'qq.com', session: true })
         const tarWeixinCookie = weixinCookie.find(v => (v.name === "wxopenid" || v.name === "wxrefresh_token"))
@@ -113,5 +118,27 @@ module.exports = function openWin () {
       }
     }
   })
+}
+
+async function setupCookie (cookies) {
+  const url = `http://localhost:3300/user/setCookie`
+
+  try {
+    const res = await axios({
+      url,
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: { data: cookies},
+      responseType: 'json'
+    })
+    console.log(res.data)
+    // const json = await res.json()
+    return res.data
+  }catch(e) {
+    console.log(e)
+    Error(e) 
+  }
 }
 

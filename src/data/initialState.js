@@ -8,6 +8,7 @@ const initialState = {
   loginStamp: null,
 
   // music player state
+  music_player: null,
   music_playing: false,
   music_info: null
 }

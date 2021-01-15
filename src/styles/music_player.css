@@ -1,15 +1,25 @@
 .music-section {
-  position: relative;
-  
+  position: fixed;
+  width: calc(100vw - 245px);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
+.music-section-main {
+  position: relative;
+  height: calc(100vh - 160px);
+  overflow: hidden;
+}
+
+
+/* ----------- part Banner ------------- */
+
 .music-player-banner {
-  position: fixed;
+  position: relative;
   width: calc(100vw - 245px);
   height: 80px;
   background-color: #333;
-  right: 0;
-  bottom: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -68,7 +78,17 @@
 } */
 
 .music-info-text {
+  flex: 1;
   padding: 0 5px;
+}
+
+.music-info-text h5 {
+  font-size: 0.8rem;
+}
+.music-info-text p {
+  font-size: 0.7rem;
+  font-weight: 100;
+  padding-top: 5px;
 }
 
 /* ----------- part 2 ------------- */
@@ -136,6 +156,7 @@
 
 .music-prograss span {
   padding: 0 10px;
+  width: 60px;
   color: #eee;
   font-size: 0.8rem;
   font-weight: 100;

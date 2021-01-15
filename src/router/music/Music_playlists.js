@@ -3,6 +3,6 @@ import React from 'react'
 
 export default function Music () {
   return (
-    <div>playlist</div>
+    <div className="music-section-main">playlist</div>
   )
 }

@@ -5,6 +5,9 @@ import {
 } from '../actions/main_action'
 
 import {
+  SET_MUSIC_PLAYER,
+  DEL_MUSIC_PLAYER,
+
   MUSIC_SET_PLAY,
   MUSIC_SET_STOP,
   MUSIC_TOGGLE_PLAY,
@@ -24,6 +27,11 @@ const reducer = (state, action) => {
     case SET_USER:
       return {...state, user: action.payload}
 
+    // music player
+    case SET_MUSIC_PLAYER: 
+      return {...state, music_player: action.payload}
+    case DEL_MUSIC_PLAYER:
+      return {...state, music_player: null, music_playing: false}
     // music state
     case MUSIC_SET_PLAY:
       if (!state.music_info) return state;
@@ -35,7 +43,7 @@ const reducer = (state, action) => {
       return {...state, music_playing: !state.music_playing}
 
     case MUSIC_MOUNT: 
-      return {...state, music_info: 'Magic'}
+      return {...state, music_info: action.payload}
     case MUSIC_UNMOUNT: 
       return {...state, music_info: null, music_playing: false}
 

@@ -31,8 +31,19 @@ section {
   position: absolute;
   right: 11px;
   height: 30px;
-  background-color: red;
+  /* background-color: red; */
   z-index: 5;
+  display: flex;
+  align-items: center;
+}
+
+.music-top-info {
+  padding-right: 40px;
+  position: relative;
+  color: var(--color-primary);
+  /* min-width: 200px; */
+  font-size: 0.9rem;
+  text-align: right;
 }
 
 .music-icon {
