@@ -4,7 +4,8 @@
 @import './sidebar.css';
 @import './section.css';
 
-
 @import './login.css';
+
+@import './music_list.css';
 @import './music_player.css';
-@import './music_section.css';
+@import './music_order_section.css';

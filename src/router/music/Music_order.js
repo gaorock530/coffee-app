@@ -1,8 +1,9 @@
 import React from 'react'
 import { DataContext } from '../../contexts/mainContext'
-import { MUSIC_MOUNT} from '../../actions/music_action'
+import { MUSIC_MOUNT, SET_MUSIC_SEARCH_RESULTS} from '../../actions/music_action'
+import MusicList from '../../components/MusicList'
 
-import { Toolbar } from '@material-ui/core';
+import { Toolbar, CircularProgress } from '@material-ui/core';
 
 import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
@@ -14,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     position: 'relative',
     backgroundColor: '#3f51b5',
-    display: 'flex'
+    // display: 'flex',
   },
   search: {
     position: 'relative',
@@ -60,30 +61,59 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Music () {
   const classes = useStyles();
-  const [, dispatch] = React.useContext(DataContext)
+  const [{music_player, music_search_results}, dispatch] = React.useContext(DataContext)
 
   const [searchValue, setSearchValue] = React.useState('')
   const [inputFocus, setInputFocus] = React.useState(false)
+  const [searching, setSearching] = React.useState(false)
+  
   const blurDebouncer = React.useRef(null)
+
 
   
 
   // http://api.qq.jsososo.com/search/quick 
 
   const onSearchInputChange = e => {
-    
     const keyword = e.target.value
     setSearchValue(keyword)
-    
   }
 
 
 
-  const onSearch = e => {
+  const onSearch = async e => {
     e.preventDefault()
     console.log(searchValue)
+
     setInputFocus(false)
-    // setSearchValue('')
+    if (!searchValue) return
+
+    setSearching(true)
+    try {
+      const res = await fetch(`http://localhost:3300/search?key=${searchValue}`)
+      const json = await res.json()
+      console.log(json)
+      if (json.result === 100 && json.data.list.length > 0) {
+        const songs = json.data.list
+        const list = songs.map(song => {
+          return {
+            songid: song.songid,
+            songname: song.songname,
+            songmid: song.songmid,
+            artists: song.singer,
+            albumname: song.albumname,
+            albummid: song.albummid,
+            duration: song.interval,
+            available: !song.pay.payplay
+          }
+        })
+        
+        dispatch({type: SET_MUSIC_SEARCH_RESULTS, payload: list})
+      }
+    }catch(e) {
+
+    }
+    setSearching(false)
   }
 
   const onQuickSearchClick = async (data) => {
@@ -98,10 +128,12 @@ export default function Music () {
       // const cookieJson = await getCookie.json()
       // console.log(cookieJson)
 
+      // fetch song detail info for getting album cover image
       const getSongInfo = await fetch(`http://localhost:3300/song?songmid=${data.mid}`)
       const songJson = await getSongInfo.json()
       // console.log(songJson)
 
+      // fetch for song play url, data: {'mid': url}
       const response = await fetch(url)
       const result = await response.json()
       // console.log(result)
@@ -109,11 +141,11 @@ export default function Music () {
       if (result.result !== 100) return console.warn('can not get song url.')
       dispatch({type: MUSIC_MOUNT, payload: {...data, url: result.data[data.mid], detail: songJson.data}})
 
+      music_player.load(result.data[data.mid])
+
     } catch (e) {
       console.log('Can not get song URL!', e)
     }
-
-    
   }
 
   const onInputFocus = () => {
@@ -157,7 +189,14 @@ export default function Music () {
       {searchValue && inputFocus && <SearchResults keyword={searchValue} onQuickSearchClick={onQuickSearchClick}/>}
       </Toolbar>
 
-      <div>Main Section</div>
+      <div className="music-order-main">
+        <div className="search-results">
+          {searching?<CircularProgress className="search-results-loading"/>:<MusicList results={music_search_results}/>}
+        </div>
+        <div className="current-playlist">
+              
+        </div>
+      </div>
     </div>
   )
 }

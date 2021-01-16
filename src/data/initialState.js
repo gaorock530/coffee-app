@@ -10,7 +10,9 @@ const initialState = {
   // music player state
   music_player: null,
   music_playing: false,
-  music_info: null
+  music_info: null,
+  music_search_results: [],
+  music_search_results_play_songmid: null
 }
 
 

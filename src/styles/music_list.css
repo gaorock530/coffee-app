@@ -1,0 +1,95 @@
+.playlist-container {
+  position: relative;
+}
+
+.playlist-container li {
+  font-size: 0.9rem;
+  height: 45px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+}
+
+.playlist-container li:hover {
+  background-color: #aaa;
+}
+
+.playlist-item:nth-child(2n) {
+  background-color: #ddd;
+}
+
+.playlist-item span {
+  padding: 0 2px;
+  overflow:hidden;/*超出部分隐藏*/
+  text-overflow:ellipsis;/*超出部分显示省略号*/
+  white-space:nowrap;/*规定段落中的文本不进行换行 */
+  color: #555;
+}
+
+.playlist-item.active  .playlist-item-name b{
+  font-weight: bold;
+  color: var(--color-primary);
+}
+
+.playlist-item.available {
+  opacity: 0.3;
+}
+
+.playlist-item-name{
+  display: flex;
+  align-items: center;
+  flex: 6;
+}
+
+.playlist-item-name>svg{
+  font-size: 1.2rem;
+  margin: 0 5px;
+  cursor: pointer;
+  color: var(--color-secondary);
+  flex: 1;
+}
+
+.playlist-item-name b {
+  padding: 0 2px;
+  font-weight: normal;
+  color: #000;
+  flex: 7;
+  overflow:hidden;/*超出部分隐藏*/
+  text-overflow:ellipsis;/*超出部分显示省略号*/
+  white-space:nowrap;/*规定段落中的文本不进行换行 */
+}
+.playlist-item-name p {
+  max-width: 150px;
+  padding: 0 10px;
+  display: flex;
+  flex: 4;
+}
+.playlist-item-name p>svg {
+  flex: 1;
+  font-size: 1.2rem;
+  margin: 0 5px;
+  cursor: pointer;
+  color: #666a6a;
+}
+.playlist-item-name p>svg:hover {
+  color: var(--color-secondary)
+}
+
+
+
+.playlist-item-artist{
+  flex: 2.5;
+
+}
+
+.playlist-item-artist b {
+  font-weight: 500;
+}
+.playlist-item-album{
+  flex: 2.5;
+
+}
+.playlist-item-time{
+  flex: 1;
+
+}

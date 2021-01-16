@@ -12,7 +12,10 @@ import {
   MUSIC_SET_STOP,
   MUSIC_TOGGLE_PLAY,
   MUSIC_MOUNT,
-  MUSIC_UNMOUNT
+  MUSIC_UNMOUNT,
+
+  SET_MUSIC_SEARCH_RESULTS,
+  SET_MUSIC_SEARCH_PLAYMID
 } from '../actions/music_action'
 
 
@@ -42,9 +45,18 @@ const reducer = (state, action) => {
       if (!state.music_info) return state;
       return {...state, music_playing: !state.music_playing}
 
+    case SET_MUSIC_SEARCH_RESULTS:
+      console.log('SET_MUSIC_SEARCH_RESULTS')
+      return {...state, music_search_results: action.payload}
+    case SET_MUSIC_SEARCH_PLAYMID:
+      console.log('SET_MUSIC_SEARCH_PLAYMID', action.payload)
+      return {...state, music_search_results_play_songmid: action.payload}
+
     case MUSIC_MOUNT: 
+      console.log('MUSIC_MOUNT', action.payload)
       return {...state, music_info: action.payload}
     case MUSIC_UNMOUNT: 
+      if (state.music_player) state.music_player.unload()
       return {...state, music_info: null, music_playing: false}
 
     // default case
