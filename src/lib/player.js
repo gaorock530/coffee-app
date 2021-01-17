@@ -1,4 +1,62 @@
 const EventEmitter = require('./event')
+const cuid = require('cuid')
+
+/**
+ * -------------------------------------------------------
+ * @class Player
+ * @author Magic
+ * @version 1.0.0
+ * @description music player that manages single song play 
+ * and handle playlists.
+ * -------------------------------------------------------
+ * @property {
+ *  STATIC:
+ * 
+ *    timeFormat (timeInSeconds)
+ * 
+ *  GETTER:
+ * 
+ *    ready
+ *    duration
+ *    volume
+ * 
+ *  SETTER:
+ * 
+ *    loop
+ *    volume
+ *  
+ *  METHODS: 
+ * 
+ *    load (url)
+ *    unload ()
+ *    
+ *    play ()
+ *    pause ()
+ *    toggle ()
+ *    seek (position, percent = true)
+ *
+ *    on (event, fn)
+ *    once (event, fn)
+ *    off (event, n)
+ *     
+ *    clear()
+ *    destory ()
+ * 
+ *  EVENTS:
+ *     
+ *    'loaded'
+ *    'musicready'
+ *    'unload'
+ *    'volumechange'
+ *      
+ *    'play'
+ *    'update'
+ *    'pause'
+ *    'ended'
+ *    
+ * } 
+ * 
+ */
 
 const DEGUB_INFO = 'Player debug:'
 
@@ -44,7 +102,7 @@ class Player {
     }
 
     if (this.audioElement) this._reload (url)
-    else this.init(url)
+    else this._init(url)
  
   }
 
@@ -58,13 +116,14 @@ class Player {
     })
   }
 
-  init (url) {
+  _init (url) {
     this.audioElement = new Audio(url)
 
     this.audioElement.autoplay = this.config.autoplay
     this.audioElement.loop = this.config.mode === 1
     this.volume = this.config.defaultVolume
     
+    this._canplaythrogh = this._canplaythrogh.bind(this)
     this._playmusic = this._playmusic.bind(this)
     this._timeupdate = this._timeupdate.bind(this)
     this._pause = this._pause.bind(this)
@@ -74,11 +133,11 @@ class Player {
     this._seeking = this._seeking.bind(this)
     this._volumechange = this._volumechange.bind(this)
     
-    this.audioElement.addEventListener('canplaythrough', this._playmusic)
+    this.audioElement.addEventListener('loadedmetadata', this._loaded)
+    this.audioElement.addEventListener('canplaythrough', this._canplaythrogh)
     this.audioElement.addEventListener('timeupdate', this._timeupdate)
     this.audioElement.addEventListener('pause', this._pause)
     this.audioElement.addEventListener('ended', this._end)
-    this.audioElement.addEventListener('loadedmetadata', this._loaded)
     this.audioElement.addEventListener('seeked', this._seeked)
     this.audioElement.addEventListener('seeking', this._seeking)
     this.audioElement.addEventListener('volumechange', this._volumechange)
@@ -115,18 +174,18 @@ class Player {
     }
   }
 
-  get playlist () {
-    return this.config.playlist
-  }
+  // get playlist () {
+  //   return this.config.playlist
+  // }
 
-  set playlist (list) {
-    this.config.playlist = list
-    this.event.excute('playlistupdated', {
-      event: 'playlistupdated',
-      list: list,
-      length: list.length
-    })
-  }
+  // set playlist (list) {
+  //   this.config.playlist = list
+  //   this.event.excute('playlistupdated', {
+  //     event: 'playlistupdated',
+  //     list: list,
+  //     length: list.length
+  //   })
+  // }
 
   set loop (value) {
     if (this.audioElement) this.audioElement.loop = value
@@ -146,27 +205,28 @@ class Player {
 
   
 
+  
+  // playnext () {
+  //   this._playnext()
+  // }
+
+  // playlast () {
+  //   if (this.playlist.length === 0) return
+
+  //   const index = --this.currentSongIndex
+
+  //   if (index < 0) this.currentSongIndex = this.playlist.length - 1
+
+  //   this.events.excute('last', {
+  //     event: 'last',
+  //     value: this.currentSongIndex
+  //   })
+  // }
   play () {
     if (!this.ready) return
     this._playmusic()
   }
 
-  playnext () {
-    this._playnext()
-  }
-
-  playlast () {
-    if (this.playlist.length === 0) return
-
-    const index = --this.currentSongIndex
-
-    if (index < 0) this.currentSongIndex = this.playlist.length - 1
-
-    this.events.excute('last', {
-      event: 'last',
-      value: this.currentSongIndex
-    })
-  }
 
   pause () {
     if (!this.ready) return
@@ -184,16 +244,23 @@ class Player {
    */
   seek (position, percent = true) {
     if (!this.ready) return
-
     const newPosition = percent?this.audioElement.duration * position:position
-    // console.log(newPosition)
     this.audioElement.currentTime = newPosition
-    // this.audioElement.fastSeek()
   }
 
   _loaded () {
     this._log('music loaded.')
     this.loaded = true
+    this.events.excute('loaded', {
+      event: 'loaded'
+    })
+  }
+
+  _canplaythrogh () {
+    this.events.excute('musicready', {
+      event: 'musicready'
+    })
+    if (this.config.autoplay) this._playmusic()
   }
 
 
@@ -211,6 +278,7 @@ class Player {
     // this._log('music time update -', this.audioElement.currentTime)
     this.events.excute('update', {
       event: 'update',
+      state: 'native',
       value: this.audioElement.currentTime
     })
   }
@@ -218,7 +286,8 @@ class Player {
   _seeked () {
     this._log('music seeked...')
     this.events.excute('update', {
-      event: 'update - seeked',
+      event: 'update',
+      state: 'seeked',
       value: this.audioElement.currentTime
     })
   }
@@ -226,7 +295,9 @@ class Player {
   _seeking () {
     this._log('music seeking...')
     this.events.excute('update', {
-      event: 'update - seeking'
+      event: 'update',
+      state: 'seeking',
+      value: this.audioElement.currentTime
     })
   }
 
@@ -254,23 +325,23 @@ class Player {
     })
 
     // if mode is not 1(repeat) then excute next song
-    if (this.config.mode !== 1) this._playnext()
+    // if (this.config.mode !== 1) this._playnext()
   }
 
-  _playnext () {
-    if (this.playlist.length === 0) return
+  // _playnext () {
+  //   if (this.playlist.length === 0) return
   
-    const index = ++this.currentSongIndex
-    // if mode is 2, NO play next when playlist play finished
-    if (this.config.mode === 2 && index >= this.playlist.lengt) return this.currentSongIndex = 0
+  //   const index = ++this.currentSongIndex
+  //   // if mode is 2, NO play next when playlist play finished
+  //   if (this.config.mode === 2 && index >= this.playlist.lengt) return this.currentSongIndex = 0
 
-    if (index >= this.playlist.length) this.currentSongIndex = 0
+  //   if (index >= this.playlist.length) this.currentSongIndex = 0
 
-    this.events.excute('next', {
-      event: 'next',
-      value: this.currentSongIndex
-    })
-  }
+  //   this.events.excute('next', {
+  //     event: 'next',
+  //     value: this.currentSongIndex
+  //   })
+  // }
 
   destory () {
 
@@ -291,8 +362,11 @@ class Player {
   }
 
   on (event, fn) {
-    const no = this.events.add(event, fn)
-    return no
+    return this.events.add(event, fn)
+  }
+
+  once(event, fn) {
+    return this.events.add(event, fn, true)
   }
 
   off (event, no) {
@@ -309,3 +383,140 @@ class Player {
 }
 
 module.exports = Player
+
+
+/**
+ * @class Playlist
+ * @author Magic
+ * @version 1.0.0
+ * @description a subclass of MusicPlayer, which manages playlist.
+ */
+
+class Playlist {
+  constructor () {
+    this.currentlist = new Map()
+    this.idList = []
+    this.currentPlayingSongID = null
+  } 
+
+  get length () {
+    return this.currentlist.length
+  }
+
+  get currentID () {
+    return this.currentPlayingSongID
+  }
+
+  loadlist (songlist) {
+    if (typeof songlist === 'object' && songlist instanceof Array) {
+
+      for(let song of songlist) {
+        this.append(song)
+      }
+
+      return this.length
+
+    } else {
+      console.warn('Playlist:', '[loadlist] {songlist} is not a Array')
+      return false
+    }
+  }
+
+  append (song) {
+    if (typeof song === 'object') {
+      // build structure
+      if (!song.id) song.id = cuid.slug()
+      song.vip = true  // indicates the song is appended by a VIP user **experimental
+      
+      this.currentlist.push(song)
+      return song.id
+
+    } else {
+      console.warn('Playlist:', '[append] {song} is not a Object')
+      return false
+    }
+  }
+
+  remove (songid) {
+    if (typeof songid === 'string') {
+
+      if (this.currentPlayingSongID === songid) console.warn('Playlist:', '[remove] {songid} is current playing song.')
+
+      this.currentlist = this.currentlist.filter(song => song.id !== songid)
+      return songid
+
+    } else {
+      console.warn('Playlist:', '[remove] {songid} is not a String')
+      return false
+    }
+
+  }
+
+  clear () {
+    this.currentlist = []
+  }
+
+
+ 
+}
+
+
+class LinkedList {
+  constructor () {
+    this.head = null
+    this.list = new Map()
+  }
+
+  // append node to the last position
+  append (id, data) {
+    const nodeReference = new Node(id)
+
+    if (this.head === null) {
+      this.head = nodeReference
+    } else {
+      let previous = this.head, current
+      while (previous.next) {
+        current = previous
+      }
+      current.next = nodeReference
+    }
+
+    this.list.set(id, data)
+  }
+
+  // insert node
+
+  // remove node
+
+  // get node
+
+  // get all node
+  showlist () {
+    const result = []
+    if (this.head === null) return result 
+
+    let previous = this.head, current
+
+    while (previous.next) {
+      current = previous
+    }
+
+  }
+}
+
+
+class Node {
+  constructor (data, prev = null, next = null) {
+    this.data = data
+    this.prev = prev
+    this.next = next
+  }
+
+  addNode (node) {
+    this.next = node
+  }
+
+
+
+
+}

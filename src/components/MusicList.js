@@ -4,8 +4,7 @@ import { MUSIC_MOUNT, SET_MUSIC_SEARCH_PLAYMID } from '../actions/music_action'
 import {Favorite, FavoriteBorder, PlaylistAdd, Forward, PlayCircleFilled} from '@material-ui/icons'
 import MusicPlayer from '../lib/player'
 
-export default function MusicList ({results = [1, 2, 3, 4, 5, 6, 13]}) {
-  console.log(results)
+export default function MusicList ({results = [1, 2, 3, 4]}) {
 
   return (
     <ul className="playlist-container">
