@@ -104,14 +104,16 @@ export default function Music () {
             albumname: song.albumname,
             albummid: song.albummid,
             duration: song.interval,
-            available: !song.pay.payplay
+            vip: !song.pay.payplay
           }
         })
         
         dispatch({type: SET_MUSIC_SEARCH_RESULTS, payload: list})
+      } else {
+        console.warn('internet connection error!')
       }
     }catch(e) {
-
+      console.warn('internet connection error!')
     }
     setSearching(false)
   }

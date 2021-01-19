@@ -13,7 +13,7 @@ export default function MusicList ({results = [1, 2, 3, 4]}) {
   )
 }
 
-function Item ({like, songname = 'name', artists = 'artists', albumname = 'album', duration = '00:00', songmid, available}) {
+function Item ({like, songname = 'name', artists = 'artists', albumname = 'album', duration = '00:00', songmid, vip}) {
   const [{music_player, music_search_results_play_songmid}, dispatch] = React.useContext(DataContext)
 
   const onPlayClick = async () => {
@@ -56,14 +56,14 @@ function Item ({like, songname = 'name', artists = 'artists', albumname = 'album
   const parseArtists = (tag) => tag.map((artist, index) => <b key={artist.mid}>{artist.name}{index === tag.length - 1?'':' / '}</b>)
 
   return (
-    <li className={`${music_search_results_play_songmid === songmid?'active ':''}playlist-item${available?'':' available'}`}>
+    <li className={`${music_search_results_play_songmid === songmid?'active ':''}playlist-item${vip?'':' vip'}`}>
       <span className="playlist-item-name">
-        {like?<Favorite />:<FavoriteBorder/>}
-        <b>{songname}</b>
-        <p><PlayCircleFilled onClick={onPlayClick}/><PlaylistAdd/><Forward/></p>
+        {like?<Favorite titleAccess="喜欢"/>:<FavoriteBorder titleAccess="喜欢"/>}
+        <b title={songname}>{songname}</b>
+        <p><PlayCircleFilled onClick={onPlayClick} titleAccess="播放"/><PlaylistAdd titleAccess="播放列表"/><Forward titleAccess="加入列队"/></p>
       </span>
-      <span className="playlist-item-artist">{parseArtists(artists)}</span>
-      <span className="playlist-item-album">{albumname}</span>
+      <span className="playlist-item-artist" title={artists.reduce((a, c, i) => a + c.name + (i === artists.length - 1?'':' / '), '')}>{parseArtists(artists)}</span>
+      <span className="playlist-item-album" title={albumname}>{albumname}</span>
       <span className="playlist-item-time">{MusicPlayer.timeFormat(duration)}</span>
     </li>
   )

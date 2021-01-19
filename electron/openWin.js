@@ -10,7 +10,7 @@ const { BrowserWindow, ipcMain } = require('electron')
 module.exports = function openWin () {
   const WIDTH = 1200
   const HEIGHT = 800
-  const waitTime = 1500
+  const waitTime = 10000 // 10 sec
 
   this.window = null        // store new window
   this.cookieTimer = null   // store timer debuncer
@@ -20,7 +20,7 @@ module.exports = function openWin () {
 
 
 
-  ipcMain.on('openWin', (e, arg) => {
+  ipcMain.on('openWin', async (e, arg) => {
     if (this.window) return
     console.log('openWin event targered', arg, typeof arg)
     if (process.platform !== "darwin") {
@@ -57,6 +57,8 @@ module.exports = function openWin () {
     }
   
     this.window.loadURL(arg)
+    this.window.webContents.openDevTools({ mode: "detach" });
+
 
     this.window.once('close', e => {
       console.log('new window closed')
@@ -73,6 +75,12 @@ module.exports = function openWin () {
     if (arg.match(/qq\.com/)) {
       console.log('qq.com')
       this.cookieIns = this.window.webContents.session.cookies
+
+      // everytime open a QQ window,
+      // clear all data [localstorage, cookies, etc.]
+      // so the user can reLOGIN properly
+      this.window.webContents.session.clearStorageData()
+
       this.cookieIns.on('changed', (e, cause, cookie, remove) => {
         clearTimeout(this.cookieTimer)
         // console.log('--------------------------cookie changed--------------------------')

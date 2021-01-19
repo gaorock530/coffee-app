@@ -31,8 +31,8 @@
   color: var(--color-primary);
 }
 
-.playlist-item.available {
-  opacity: 0.3;
+.playlist-item.vip {
+  /* opacity: 0.3; */
 }
 
 .playlist-item-name{
